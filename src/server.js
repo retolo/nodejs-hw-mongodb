@@ -27,21 +27,21 @@ function setupServer(){
             data: contacts,
         })
     })
-    app.get('/contacts:contactId', async (req, res) =>{
+    app.get('/contacts/:contactId', async (req, res) =>{
         try {
             const {contactId} = req.params;
-        const contact = await getContactById(contactId);
-        res.status(200).json({
-            status: 200,
-            message:`Successfully found contact with id ${contactId}!`,
-            data: {
-                name: contact.name,
-                phoneNumber: contact.phoneNumber,
-                isFavourite: contact.isFavourite,
-                contactType: contact.contactType,
-                email: contact.email,
+            const contact = await getContactById(contactId);
+            res.status(200).json({
+                status: 200,
+                message:`Successfully found contact with id ${contactId}!`,
+                data: {
+                    name: contact.name,
+                    phoneNumber: contact.phoneNumber,
+                    isFavourite: contact.isFavourite,
+                    contactType: contact.contactType,
+                    email: contact.email,
 
-            },
+                },
         })
         } catch (error) {
             res.status(404).json({
