@@ -1,8 +1,8 @@
 import { ContactCollection } from "../db/models/contact.js";
+import { SORT_ORDER } from "../constants/index.js";
 
 
-
-export async function getAllContacts(page=1, perPage=10, sortBy='_id', sortOrder='asc'){
+export async function getAllContacts(page=1, perPage=10, sortBy='_id', sortOrder=SORT_ORDER.ASC){
     const limit = perPage;
     const skip = page > 0 ? (page - 1) * perPage : 0
 
