@@ -1,4 +1,4 @@
-
+import { SORT_ORDER } from "../constants/index.js";
 
 function parseSortBy(sortBy){
     if(typeof sortBy === 'undefined'){
@@ -7,11 +7,14 @@ function parseSortBy(sortBy){
 
 
     const params =[
-        'name',
-        'phoneNumber',
-        'email',
-        'isFavourite',
-        'contactType',
+            '_id',
+            'name',
+            'age',
+            'gender',
+            'avgMark',
+            'onDuty',
+            'createdAt',
+            'updatedAt',
 
     ];
     if(params.includes(sortBy)){
@@ -25,17 +28,14 @@ function parseSortBy(sortBy){
 
 
 function parseSortOrder(sortOrder){
-    if(typeof sortOrder === 'undefined'){
-        return 'asc'
+
+    const isKnownOrder = [SORT_ORDER.ASC, SORT_ORDER.DESC].includes(sortOrder);
+    if(isKnownOrder){
+        return sortOrder
     }
 
-    if(sortOrder !== 'asc' && sortOrder !== 'desc'){
-        return 'asc'
-    }
 
-
-
-    return sortOrder
+    return SORT_ORDER.ASC
 
 }
 
