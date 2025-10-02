@@ -7,11 +7,14 @@ function parseSortBy(sortBy){
 
 
     const params =[
-        'name',
-        'phoneNumber',
-        'email',
-        'isFavourite',
-        'contactType',
+            '_id',
+            'name',
+            'age',
+            'gender',
+            'avgMark',
+            'onDuty',
+            'createdAt',
+            'updatedAt',
 
     ];
     if(params.includes(sortBy)){

@@ -5,9 +5,10 @@ import { SORT_ORDER } from "../constants/index.js";
 export async function getAllContacts(page=1, perPage=10, sortBy='_id', sortOrder=SORT_ORDER.ASC){
     const limit = perPage;
     const skip = page > 0 ? (page - 1) * perPage : 0
+    // const contactsQuery = await ContactCollection.find();
 
     const [contacts, totalItems] = await Promise.all([
-        await ContactCollection.find().sort({[sortBy]: sortOrder}).limit(limit).skip(skip).exec(),
+        await ContactCollection.find().limit(limit).skip(skip).sort({[sortBy]: sortOrder}).exec(),
         ContactCollection.countDocuments()
     ])
 
