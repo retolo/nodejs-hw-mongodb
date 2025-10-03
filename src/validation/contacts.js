@@ -12,10 +12,10 @@ export const schemaCreate = Joi.object({
 
 
 export const schemaUpdate = Joi.object({
-    name: Joi.string().min(3).max(20 ).required(),
-    phoneNumber: Joi.string().min(10).max(20 ).required(),
+    name: Joi.string().min(3).max(20 ),
+    phoneNumber: Joi.string().min(10).max(20 ),
     email: Joi.string().email(),
     isFavourite: Joi.boolean(),
-    contactType: Joi.string().valid('work', 'home', 'personal').required(),
+    contactType: Joi.string().valid('work', 'home', 'personal'),
 
 })
