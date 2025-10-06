@@ -2,13 +2,13 @@ import { ContactCollection } from "../db/models/contact.js";
 import { SORT_ORDER } from "../constants/index.js";
 
 
-export async function getAllContacts(page=1, perPage=10, sortBy='_id', sortOrder=SORT_ORDER.ASC){
+export async function getAllContacts(page=1, perPage=10, sortBy='_id', sortOrder=SORT_ORDER.ASC, userId){
     const limit = perPage;
     const skip = page > 0 ? (page - 1) * perPage : 0
     // const contactsQuery = await ContactCollection.find();
 
     const [contacts, totalItems] = await Promise.all([
-        await ContactCollection.find().limit(limit).skip(skip).sort({[sortBy]: sortOrder}).exec(),
+        await ContactCollection.find({_id: userId}).limit(limit).skip(skip).sort({[sortBy]: sortOrder}).exec(),
         ContactCollection.countDocuments()
     ])
 
@@ -30,26 +30,33 @@ export async function getAllContacts(page=1, perPage=10, sortBy='_id', sortOrder
 
 }
 
-export async function getContactById(contactId){
-    const res = await ContactCollection.findById(contactId);
+export async function getContactById(contactId, userId){
+    const res = await ContactCollection.findById({_id: contactId, userId: userId});
     return res;
 }
 
-export async function createContact(payload) {
-    const res = await ContactCollection.create(payload);
+export async function createContact(payload, userId) {
+    const res = await ContactCollection.create({
+        name: payload.name,
+        phoneNumber: payload.phoneNumber,
+        email: payload.email,
+        isFavourite: payload.isFavourite,
+        contactType: payload.contactType,
+        userId
+    });
     return res;
 
 }
 
 
-export async function deleContact(contactId) {
-    const res = ContactCollection.findByIdAndDelete(contactId)
+export async function deleContact(contactId, userId) {
+    const res = ContactCollection.findByIdAndDelete({_id: contactId, userId: userId})
     return res
 
 }
 
-export async function upserContact(payload, contactId){
-    const res = await ContactCollection.findByIdAndUpdate(payload, contactId, {
+export async function upserContact(payload, contactId, userId){
+    const res = await ContactCollection.findByIdAndUpdate(payload, contactId, userId,  {
         new: true,
         includeResultMetadata: true
     });

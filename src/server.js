@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors'
 import pino from 'pino-http'
-import router from './routers/contacts.js';
+import router from './routers/index.js';
 import * as dotenv from 'dotenv'
+import cookieParser from 'cookie-parser';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 dotenv.config();
@@ -13,6 +14,9 @@ function setupServer(){
 
     app.use(express.json());
     app.use(cors());
+    app.use(cookieParser());
+    app.use(router);
+
 
     app.use(
         pino({
@@ -22,9 +26,10 @@ function setupServer(){
         })
     )
 
-    app.use(router);
+
     app.use(notFoundHandler);
     app.use(errorHandler);
+
 
 
 
