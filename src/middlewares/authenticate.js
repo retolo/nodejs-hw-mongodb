@@ -40,7 +40,7 @@ export const authenticate = async (req, res, next) =>{
 
 
 
-    const user = UserCollection.findOne(session.userId);
+    const user = await UserCollection.findOne(session.userId);
 
     if(!user){
         next(createHttpError(401));

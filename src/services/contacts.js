@@ -8,7 +8,7 @@ export async function getAllContacts(page=1, perPage=10, sortBy='_id', sortOrder
     // const contactsQuery = await ContactCollection.find();
 
     const [contacts, totalItems] = await Promise.all([
-        await ContactCollection.find({_id: userId}).limit(limit).skip(skip).sort({[sortBy]: sortOrder}).exec(),
+        await ContactCollection.find({userId}).limit(limit).skip(skip).sort({[sortBy]: sortOrder}).exec(),
         ContactCollection.countDocuments()
     ])
 
@@ -42,7 +42,8 @@ export async function createContact(payload, userId) {
         email: payload.email,
         isFavourite: payload.isFavourite,
         contactType: payload.contactType,
-        userId
+        userId: userId,
+
     });
     return res;
 
