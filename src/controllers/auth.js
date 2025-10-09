@@ -1,5 +1,5 @@
 import { registerUser, loginUser, refreshUserSession, logOut } from "../services/auth.js";
-
+import { THIRTY_DAYS } from "../constants/index.js";
 
 
 export async function registerUserController(req, res) {
@@ -19,19 +19,21 @@ export async function loginUserController(req, res) {
 
     res.cookie('sessionId', session._id, {
         httpOnly: true,
-        expires: session.refreshTokenValidUntil,
+        expires: new Date(Date.now() + THIRTY_DAYS)
     })
 
     res.cookie('refreshToken', session.refreshToken, {
         httpOnly: true,
-        expires: session.refreshTokenValidUntil
+        expires: new Date(Date.now() + THIRTY_DAYS)
     })
 
 
     res.json({
         status: 201,
         message: 'Successfully logged in an user!',
-        data: session
+        data: {
+            accessToken: session.accessToken
+        }
     })
 
 }
@@ -40,12 +42,12 @@ export async function loginUserController(req, res) {
 function setupSession(res, session){
     res.cookie('sessionId', session._id, {
         httpOnly: true,
-        expires: session.refreshTokenValidUntil
+        expires: new Date(Date.now() + THIRTY_DAYS)
     })
 
     res.cookie('refreshToken', session.refreshToken, {
         httpOnly: true,
-        expires: session.refreshTokenValidUntil
+        expires: new Date(Date.now() + THIRTY_DAYS)
     })
 }
 
