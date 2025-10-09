@@ -1,4 +1,4 @@
-import * as dotenv from 'dotenv';
+
 import mongoose from "mongoose";
 
 
@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 
 async function initMongoConnection(){
     try {
-        dotenv.config();
+
         const pwd = process.env.MONGODB_PASSWORD;
         const url = process.env.MONGODB_URL;
         const user = process.env.MONGODB_USER;
