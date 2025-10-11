@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 // dotenv.config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || '3000';
 function setupServer(){
     const app = express()
 
