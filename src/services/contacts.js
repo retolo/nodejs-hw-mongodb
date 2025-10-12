@@ -57,15 +57,16 @@ export async function deleContact(contactId, userId) {
 }
 
 export async function upserContact(contactId, payload, userId){
-    const res = await ContactCollection.findByIdAndUpdate(
-        {_id: contactId, userId: userId},
+    const res = await ContactCollection.findOneAndUpdate(
+        {_id: contactId, userId},
         payload,
         {
             new: true,
+            upsert: false,
             includeResultMetadata: true
         }
     )
-    console.log(res.value)
+
     return {
         value: res.value,
         updatedExisting: res.lastErrorObject.updatedExisting

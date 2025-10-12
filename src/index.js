@@ -1,16 +1,15 @@
 import setupServer from "./server.js";
 import initMongoConnection from "./db/initMongoConnection.js";
-
-
+import { createDirIfNotExists } from "./utils/createDirIfNotExists.js";
+import { TEMP_ULOAD_DIR, UPLOAD_DIR } from "./constants/index.js";
 
 const start = async () =>{
-    try {
+
         await initMongoConnection()
+        await createDirIfNotExists(TEMP_ULOAD_DIR)
+        await createDirIfNotExists(UPLOAD_DIR)
         setupServer()
-    } catch (error) {
-         console.error('❌ MongoDB connection failed:', error.message);
-        process.exit(1);
-    }
+
 }
 
 
