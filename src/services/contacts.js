@@ -56,11 +56,16 @@ export async function deleContact(contactId, userId) {
 
 }
 
-export async function upserContact(payload, contactId, userId){
-    const res = await ContactCollection.findByIdAndUpdate(payload, contactId, userId,  {
-        new: true,
-        includeResultMetadata: true
-    });
+export async function upserContact(contactId, payload, userId){
+    const res = await ContactCollection.findByIdAndUpdate(
+        {_id: contactId, userId: userId},
+        payload,
+        {
+            new: true,
+            includeResultMetadata: true
+        }
+    )
+    console.log(res.value)
     return {
         value: res.value,
         updatedExisting: res.lastErrorObject.updatedExisting

@@ -47,7 +47,7 @@ export async function contactByIdController(req, res, next) {
 }
 
 export async function createContactController(req, res){
-    console.log(req.user._id)
+    // console.log(req.user._id)
     const contact = await createContact(req.body, req.user._id)
 
     res.status(201).json({
@@ -71,12 +71,14 @@ export async function deleContactController(req, res, next) {
 }
 
 export async function upsertContactController(req, res, next){
-    const {contactId} = req.params;
+    const {contactId} =  req.params;
     const userId = req.user._id
+    console.log(userId.toString())
     const contact = await upserContact(contactId, req.body, userId);
 
     if(!contact){
-        next(createHttpError(404, "Contact not found"))
+        next(createHttpError(404, "Contact not found"));
+        return;
     }
 
     if(contact.updatedExisting === true){
