@@ -22,6 +22,7 @@ export const schemaUpdate = Joi.object({
             return helper.message('User id should be a valid mongo id')
         }
         return true;
-    })
+    }),
+
 
 })
