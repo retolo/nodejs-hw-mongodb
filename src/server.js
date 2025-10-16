@@ -7,7 +7,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { UPLOAD_DIR } from './constants/index.js';
 import { getEnvVar } from './utils/getEnvVar.js';
-import { swaggerDocs } from './utils/swaggerDocs.js';
+import {swaggerDocs} from './middlewares/swaggerDocs.js'
 const PORT = getEnvVar('PORT') || '3000';
 function setupServer(){
     const app = express()
@@ -27,7 +27,7 @@ function setupServer(){
         })
     )
     app.use('/uploads', express.static(UPLOAD_DIR))
-    app.use('/api-docs', swaggerDocs());
+    app.use('/api-docs', swaggerDocs);
     app.get('/', (req, res) =>{
         res.json({
             message: 'Hello node'
