@@ -49,8 +49,23 @@ export async function contactByIdController(req, res, next) {
 }
 
 export async function createContactController(req, res){
-    // console.log(req.user._id)
-    const contact = await createContact(req.body, req.user._id)
+    const photo = req.file;
+    const userId = req.user._id;
+
+    let photoUrl;
+    console.log("FILE:", req.file);
+
+
+    console.log("BODY:", req.body);
+
+    if(getEnvVar('ENABLE_CLOUDINARY') === 'true'){
+         photoUrl = await saveFileToCloudinary(photo);
+    }else{
+        photoUrl = await saveFileToUploadDir(photo);
+    }
+    const contact = await createContact(userId, {...req.body, photo: photoUrl})
+
+
 
     res.status(201).json({
         status: 201,
@@ -86,7 +101,8 @@ export async function upsertContactController(req, res, next){
     }
 
 
-    const result = await upserContact(userId, contactId,{
+
+    const result = await upserContact(contactId, userId,{
         ...req.body,
         photo: photoUrl
     });
@@ -100,13 +116,13 @@ export async function upsertContactController(req, res, next){
         res.status(200).json({
             status: 201,
             message: "Successfully patched a contact!",
-            data: result.contact
+            data: result
         })
     }
 
     res.status(200).json({
         status: 200,
         message: "Successfully patched a contact!",
-        data: result.contact
+        data: result
     })
 }

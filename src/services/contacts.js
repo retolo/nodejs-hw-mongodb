@@ -35,14 +35,10 @@ export async function getContactById(contactId, userId){
     return res;
 }
 
-export async function createContact(payload, userId) {
+export async function createContact(userId, payload) {
     const res = await ContactCollection.create({
-        name: payload.name,
-        phoneNumber: payload.phoneNumber,
-        email: payload.email,
-        isFavourite: payload.isFavourite,
-        contactType: payload.contactType,
-        userId: userId,
+        userId,
+        ...payload
 
     });
     return res;
@@ -56,7 +52,7 @@ export async function deleContact(contactId, userId) {
 
 }
 
-export async function upserContact(contactId, payload, userId){
+export async function upserContact(contactId, userId, payload){
     const res = await ContactCollection.findOneAndUpdate(
         {_id: contactId, userId},
         payload,
@@ -66,6 +62,7 @@ export async function upserContact(contactId, payload, userId){
             includeResultMetadata: true
         }
     )
+
 
     return {
         value: res.value,
