@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import fs from 'node:fs/promises';
-import { SWAGGER_PATH } from '../constants';
+import { SWAGGER_PATH } from '../constants/index.js';
 import createHttpError from 'http-errors';
 import swaggerUI  from 'swagger-ui-express'
 
