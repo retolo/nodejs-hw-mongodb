@@ -26,15 +26,18 @@ function setupServer(){
             }
         })
     )
-    app.use('/uploads', express.static(UPLOAD_DIR))
-    app.use('/api-docs', swaggerDocs);
+
     app.get('/', (req, res) =>{
         res.json({
             message: 'Hello node'
         })
     })
 
+
+
     app.use(router);
+    app.use('/uploads', express.static(UPLOAD_DIR))
+    app.use('/api-docs', swaggerDocs());
     app.use(notFoundHandler);
     app.use(errorHandler);
 
