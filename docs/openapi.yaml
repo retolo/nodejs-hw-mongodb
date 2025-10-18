@@ -46,7 +46,12 @@ paths:
   /auth/reset-password:
     post:
       $ref: ../swagger/paths/auth/resetPassword.yaml
-
+  /auth/get-oauth-url:
+    get:
+      $ref: ../swagger/paths/auth/GetOauthUrl.yaml
+  /auth/confirm-oauth:
+    post:
+      $ref: ../swagger/paths/auth/confirmOauth.yaml
 components:
   securitySchemes:
     bearerAuth:
